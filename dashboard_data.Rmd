@@ -1,0 +1,59 @@
+---
+title: "Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source: embed 
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+library(flexdashboard)
+```
+
+```{r}
+data("rest_inspec")
+
+nyc_inspect = 
+  rest_inspec %>% 
+  select(camis, dba, boro, zipcode, cuisine_description,
+         inspection_date, violation_code,
+         violation_description, critical_flag,
+         score, grade, zipcode) %>% 
+  separate(inspection_date, 
+           into = c("inspection_year", NA, NA),
+           convert = TRUE
+           ) %>% 
+  filter(boro == "MANHATTAN", 
+         inspection_year >= 2016) %>% 
+  rename(borough = boro)
+  
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Scatterplot
+
+```{r}
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Box plot
+
+```{r}
+
+```
+
+### Bar plot
+
+```{r}
+
+```
+
