@@ -15,4 +15,7 @@ You can find information on my professional and academic experiences under the "
 
 * [Resume](resume.html)
 
-I have also put together a dashboard on a sample dataset and visualizations under the "Sample Data" tab. The dataset in this example is from NYC Restaurant Inspection Results. 
+You can also find a dashboard on a sample dataset and visualizations under the "NYC Food Inspections" tab. The dataset consists of NYC Restaurant Inspection Results. You can also access this page from the link below. 
+
+* [NYC Food Inspections](dashboard_data.html)
+
