@@ -35,9 +35,54 @@ nyc_inspect =
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Scatterplot
+### Total Critical Flags Across Cuisine Types in Manhattan
 
 ```{r scatterplot for critical flags}
+nyc_inspect %>% 
+  select(inspection_year, critical_flag, borough, cuisine_description) %>% 
+  filter(
+    critical_flag == "Critical", 
+    borough == "MANHATTAN",
+    cuisine_description %in% c("American", "Italian", "Barbecue", "Seafood", "Pizza", "Chinese", "Thai", "Korean", "Indian")
+    ) %>% 
+  group_by(inspection_year, cuisine_description) %>% 
+  summarise(
+    total_critical_flags = n()
+    ) %>% 
+  plot_ly(x = ~ inspection_year, 
+          y = ~ total_critical_flags, 
+          color = ~ cuisine_description,
+          type = "scatter", 
+          mode = "markers", 
+          colors = "viridis")
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Distibution of "American" Cuisine that Received Critical Flags Across NYC Boroughs in 2015-2017
+
+```{r}
+nyc_inspect %>% 
+  select(inspection_year, critical_flag, borough, cuisine_description) %>%
+filter(
+    critical_flag == "Critical", 
+    borough %in% c("MANHATTAN", "QUEENS", "BROOKLYN", "BRONX", "STATEN ISLAND"),
+    cuisine_description == "American"
+    ) %>%
+  group_by(borough, cuisine_description, inspection_year) %>% 
+  summarise(
+    critical_flags_american = n()
+    ) %>% 
+  plot_ly(y = ~ critical_flags_american, 
+          color = ~ borough,
+          type = "box", 
+          colors = "viridis")
+```
+
+### Total Critical Flags Across the NYC Boroughs fromm 2014 to 2017
+
+```{r}
 nyc_inspect %>% 
   select(inspection_year, critical_flag, borough) %>% 
   filter(
@@ -52,22 +97,7 @@ nyc_inspect %>%
   plot_ly(x = ~ inspection_year, 
           y = ~ total_critical_flags, 
           color = ~ borough,
-          type = "scatter", 
-          mode = "markers")
-```
-
-Column {data-width=350}
------------------------------------------------------------------------
-
-### Box plot
-
-```{r}
-
-```
-
-### Bar plot
-
-```{r}
-
+          type = "bar", 
+          colors = "viridis")
 ```
 
