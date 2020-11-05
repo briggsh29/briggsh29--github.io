@@ -1,5 +1,5 @@
 ---
-title: "Dashboard"
+title: "NYC Food Inspections"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
