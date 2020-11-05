@@ -14,7 +14,7 @@ library(plotly)
 library(flexdashboard)
 ```
 
-```{r}
+```{r loading data}
 data("rest_inspec")
 
 nyc_inspect = 
@@ -23,12 +23,11 @@ nyc_inspect =
          inspection_date, violation_code,
          violation_description, critical_flag,
          score, grade, zipcode) %>% 
-  separate(inspection_date, 
-           into = c("inspection_year", NA, NA),
-           convert = TRUE
-           ) %>% 
-  filter(boro == "MANHATTAN", 
-         inspection_year >= 2016) %>% 
+  separate(
+    inspection_date, 
+    into = c("inspection_year", NA, NA),
+    convert = TRUE
+    ) %>% 
   rename(borough = boro)
   
 ```
@@ -38,8 +37,23 @@ Column {data-width=650}
 
 ### Scatterplot
 
-```{r}
-
+```{r scatterplot for critical flags}
+nyc_inspect %>% 
+  select(inspection_year, critical_flag, borough) %>% 
+  filter(
+    critical_flag == "Critical", 
+    borough %in% c("MANHATTAN", "QUEENS", "BROOKLYN", "BRONX", "STATEN ISLAND"),
+    inspection_year > 2013
+    ) %>% 
+  group_by(inspection_year, borough) %>% 
+  summarise(
+    total_critical_flags = n()
+    ) %>% 
+  plot_ly(x = ~ inspection_year, 
+          y = ~ total_critical_flags, 
+          color = ~ borough,
+          type = "scatter", 
+          mode = "markers")
 ```
 
 Column {data-width=350}
